@@ -17,12 +17,6 @@ section h2 {
   border-bottom: 1px solid black;
 }
 
-
-
-.counter {
-  float: right;
-}
-
 section textarea {
   width: 100%;
   height: 50px;
@@ -32,4 +26,82 @@ section textarea {
 textarea[name="text"] {
   padding: 5px;
 }
+
+.counter {
+  float: right;
+}
+
+/*tweets container*/
+#tweets {
+  margin-left: 2em;
+  margin-right: 2em;
+  background-color: #eee;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  overflow: auto;
+  padding: 20px;
+}
+
+article.tweet {
+  border-radius: 0.5em;
+  border: 1px solid #cacaca;
+  margin-bottom: 1em;
+  background-color: white;
+}
+
+article.tweet header {
+  background-color: lightgrey;
+  opacity: 0.5;
+  display: flex;
+}
+
+article.tweet img.avatar {
+  size: 50%;
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-bottom: 10px;
+  height: 45px;
+  width: 45px;
+  float: left;
+}
+
+article.tweet > p {
+  width: 100%;
+  height: 50px;
+  background-color: white;
+  padding: 50px;
+}
+
+article.tweet header > h3 {
+  color: slategrey;
+  margin-top: 10px;
+  margin-left: 5px;
+  float: left;
+}
+article.tweet header > p {
+  padding-right: 10px;
+  font-size: x-small;
+}
+
+article.tweet:hover {
+  border: 1px solid #919191;
+}
+
+article.tweet:hover header {
+  opacity: 2;
+}
+
+article.tweet footer > p {
+  background-color: #ffffff;
+  border-radius: 0 0 .5em .5em;
+  border-top: 1px solid #cacaca;
+  font-size: .75em;
+  line-height: 2em;
+  padding-left: 10px;
+}
+
+
+
 
