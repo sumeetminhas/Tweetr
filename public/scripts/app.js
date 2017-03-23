@@ -4,7 +4,6 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
  $(document).ready(function() {
-
 function renderTweets(tweets) {
   $('#tweets').empty();
   for (let tweet in tweets){
@@ -62,6 +61,7 @@ function loadTweets() {
 }
 //event handlers
 
+$('section.new-tweet').css("display", "none");
 $('#usr-nav').on('click', function(e){
     $('section.new-tweet').slideToggle();
     $('section textarea').focus();

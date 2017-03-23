@@ -84,7 +84,7 @@ article.tweet:hover {
 }
 
 article.tweet:hover header {
-  opacity: 2;
+  opacity: 0.5;
 }
 
 article.tweet footer > p {
