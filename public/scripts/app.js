@@ -3,47 +3,48 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
- $(document).ready(function() {
-function renderTweets(tweets) {
-  $('#tweets').empty();
-  for (let tweet in tweets){
-    $(createTweetElement(tweets[tweet])).prependTo('#tweets');
-  }
-}
 
-function createTweetElement(tweet) {
-  // let $article = $('<article class="tweet"></article>');
-  //   $article.append(createHeader(tweet))
-  //           .append(createBody(tweet))
-  //           .append(createFooter(tweet))
-  //   return $article;
-  return $('<article>', {
-    class: "tweet",
-    html: [
-      createHeader(tweet),
-      createBody(tweet),
-      createFooter(tweet)
-    ]
-  })
+ $(document).ready(function() {
+  function renderTweets(tweets) {
+    $('#tweets').empty();
+    for (let tweet in tweets){
+      $(createTweetElement(tweets[tweet])).prependTo('#tweets');
+    }
+  }
+
+  function createTweetElement(tweet) {
+    // let $article = $('<article class="tweet"></article>');
+    //   $article.append(createHeader(tweet))
+    //           .append(createBody(tweet))
+    //           .append(createFooter(tweet))
+    //   return $article;
+    return $('<article>', {
+      class: "tweet",
+      html: [
+        createHeader(tweet),
+        createBody(tweet),
+        createFooter(tweet)
+      ]
+    })
 }
 
 function createHeader(data) {
   var $header = $('<header></header>')
-    $header.append($('<img>').addClass('avatar').attr('src', data.user.avatars.small))
-           .append($('<h3></h3>').text(data.user.name))
-           .append($('<span>').addClass("user-handle").text(`${data.user.handle}`));
-    return $header;
+  $header.append($('<img>').addClass('avatar').attr('src', data.user.avatars.small))
+         .append($('<h3></h3>').text(data.user.name))
+         .append($('<span>').addClass("user-handle").text(`${data.user.handle}`));
+  return $header;
 }
 
 function createBody(data) {
   var $body = $('<div>')
-    $body.append($('<p>').text(data.content.text));
+  $body.append($('<p>').text(data.content.text));
   return $body;
 }
 
 function createFooter(data) {
   var $footer = $('<footer>')
-    $footer.append($('<p>').text(data.created_at));
+  $footer.append($('<p>').text(data.created_at));
   return $footer;
 }
 
@@ -53,10 +54,17 @@ function loadTweets() {
     url: '/tweets',
     success: function(tweets) {
       renderTweets(tweets);
+      $("main textarea").val("");
+      $("main textarea").focus();
     },
-    error: function() {
+    error: function(err) {
+      console.error("oh no!!!", err);
     }
   })
+}
+
+function request(config) {
+  return $.ajax(config)
 }
 //event handlers
 
@@ -65,6 +73,10 @@ $('#usr-nav').on('click', function(e){
     $('section.new-tweet').slideToggle();
     $('section textarea').focus();
   });
+
+function erroredOut(err) {
+  // do something to handle error
+}
 
 $('.new-tweet form').on('submit', function (e) {
   e.preventDefault();
@@ -78,23 +90,23 @@ $('.new-tweet form').on('submit', function (e) {
   } else if ($newTweetText.length > 140) {
     $('#error').text("Tweet exceeds 140 characters.");
   } else {
-  $.ajax ({
-    method: 'POST',
-    url: '/tweets',
-    data: {
-      text: $newTweetText
-    },
-    success: function() {
-      loadTweets();
-    },
-    error: function() {
-    }
-  }).done(function(){
-    $("main textarea").val("");
-    $("main textarea").focus();
-    window.location.reload(true);
-  })
-}
+    var data = {text: $newTweetText}
+    request({method: 'POST', url: '/tweets', data: data})
+      .then(loadTweets, erroredOut)
+    // $.ajax ({
+    //   method: 'POST',
+    //   url: '/tweets',
+    //   data: {
+    //     text: $newTweetText
+    //   },
+    //   success: function() {
+    //     loadTweets();
+
+    //   },
+    //   error: function() {
+
+    //   }
+  }
 });
 
 loadTweets();

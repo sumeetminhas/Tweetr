@@ -19,8 +19,8 @@ app.use(express.static("public"));
 
 
 MongoClient.connect(MONGODB_URI).then(db => {
-const dataHelpers  = dataHelpersFactory(db);
-const tweetsRoutes = tweetsRoutesFactory(dataHelpers);
+  const dataHelpers  = dataHelpersFactory(db);
+  const tweetsRoutes = tweetsRoutesFactory(dataHelpers);
 
   app.use('/tweets', tweetsRoutes);
 
