@@ -55,7 +55,6 @@ function loadTweets() {
       renderTweets(tweets);
     },
     error: function() {
-      // alert('error');
     }
   })
 }
@@ -86,12 +85,14 @@ $('.new-tweet form').on('submit', function (e) {
       text: $newTweetText
     },
     success: function() {
-      // alert('success');
       loadTweets();
     },
     error: function() {
-      // alert('error');
     }
+  }).done(function(){
+    $("main textarea").val("");
+    $("main textarea").focus();
+    window.location.reload(true);
   })
 }
 });
