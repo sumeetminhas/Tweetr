@@ -3,7 +3,6 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-
  $(document).ready(function() {
   function renderTweets(tweets) {
     $('#tweets').empty();
@@ -13,11 +12,6 @@
   }
 
   function createTweetElement(tweet) {
-    // let $article = $('<article class="tweet"></article>');
-    //   $article.append(createHeader(tweet))
-    //           .append(createBody(tweet))
-    //           .append(createFooter(tweet))
-    //   return $article;
     return $('<article>', {
       class: "tweet",
       html: [
@@ -62,10 +56,6 @@ function loadTweets() {
     }
   })
 }
-
-function request(config) {
-  return $.ajax(config)
-}
 //event handlers
 
 $('section.new-tweet').css("display", "none");
@@ -74,39 +64,32 @@ $('#usr-nav').on('click', function(e){
     $('section textarea').focus();
   });
 
-function erroredOut(err) {
-  // do something to handle error
-}
-
 $('.new-tweet form').on('submit', function (e) {
   e.preventDefault();
 
   $('#error').text("");
   var $newTweet = $('.new-tweet textarea');
   var $newTweetText = $newTweet.val().trim();
-  alert($newTweetText);
   if ($newTweetText.length === 0) {
     $('#error').text("Tweet area cannot be empty.");
   } else if ($newTweetText.length > 140) {
     $('#error').text("Tweet exceeds 140 characters.");
   } else {
-    var data = {text: $newTweetText}
-    request({method: 'POST', url: '/tweets', data: data})
-      .then(loadTweets, erroredOut)
-    // $.ajax ({
-    //   method: 'POST',
-    //   url: '/tweets',
-    //   data: {
-    //     text: $newTweetText
-    //   },
-    //   success: function() {
-    //     loadTweets();
+    $.ajax ({
+      method: 'POST',
+      url: '/tweets',
+      data: {
+        text: $newTweetText
+      },
+      success: function() {
+        loadTweets();
 
-    //   },
-    //   error: function() {
+      },
+      error: function() {
 
-    //   }
-  }
+      }
+    })
+}
 });
 
 loadTweets();
